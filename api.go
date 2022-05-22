@@ -213,7 +213,7 @@ func StartServer(pm *[]PortMap) {
 	if httpPort == "" {
 		log.Fatal("$PORT must be set")
 	}
-	tzdata, tzr := LoadTZData("tz.json")
+	tzdata, tzr := LoadTZData("/etc/fclock-tz.json")
 	if tzr != nil {
 		log.Fatal(tzr)
 	}
