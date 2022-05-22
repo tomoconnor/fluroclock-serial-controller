@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "777821aa-70bb-49c1-84d8-726d42e1fb41",
+		"name": "fclock-go",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:9000/panel/1/direct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"panel_id\": \"1\",\n    \"a\": \"1\",\n    \"b\": \"1\",\n    \"c\": \"1\",\n    \"d\": \"1\",\n    \"e\": \"1\",\n    \"f\": \"1\",\n    \"g\": \"0\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/panel/1/direct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"panel",
+						"1",
+						"direct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/panel/numeric",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"panel_id\": \"1\",\n    \"value\": \"3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/panel/numeric",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"panel",
+						"numeric"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9000/panel/alpha",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"panel_id\": \"1\",\n    \"alpha\": \"H\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/panel/alpha",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"panel",
+						"alpha"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

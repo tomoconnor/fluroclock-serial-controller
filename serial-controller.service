@@ -1,0 +1,11 @@
+[Unit]
+Description=F-Clock Control API Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/serial-controller
+Environment="PORT=9000"
+
+[Install]
+WantedBy=multi-user.target
