@@ -6,6 +6,7 @@ After=network.target
 Type=simple
 ExecStart=/usr/local/bin/serial-controller
 Environment="PORT=9000"
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
