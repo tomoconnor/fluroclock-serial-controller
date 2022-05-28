@@ -28,7 +28,7 @@ func ClockModeUpdateTime(pm *[]PortMap) error {
 	m2 := timestamp[4:5]
 
 	// dataArray := []string{h1, h2, m1, m2}
-	// log.Println(dataArray)
+	log.Println("Data:", h1, h2, m1, m2)
 	porth1, err := GetPortByID("1", *pm)
 	if err != nil {
 		return err
