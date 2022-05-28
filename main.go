@@ -60,7 +60,7 @@ func ClockModeUpdateTime(pm *[]PortMap) error {
 	porth1.State.BCDData = &f1
 	porth1.State.DirectData = nil
 
-	seth2e := SendSerialString(fmt.Sprintf("+P2MIV%s-", h1), porth2.Port)
+	seth2e := SendSerialString(fmt.Sprintf("+P2MIV%s-", h2), porth2.Port)
 	if seth2e != nil {
 		log.Printf("error updating time: %s\n", seth2e)
 		return seth2e
@@ -74,7 +74,7 @@ func ClockModeUpdateTime(pm *[]PortMap) error {
 	porth2.State.BCDData = &f2
 	porth2.State.DirectData = nil
 
-	setm1e := SendSerialString(fmt.Sprintf("+P3MIV%s-", h1), portm1.Port)
+	setm1e := SendSerialString(fmt.Sprintf("+P3MIV%s-", m1), portm1.Port)
 	if setm1e != nil {
 		log.Printf("error updating time: %s\n", setm1e)
 		return setm1e
@@ -90,7 +90,7 @@ func ClockModeUpdateTime(pm *[]PortMap) error {
 	portm1.State.BCDData = &f3
 	portm1.State.DirectData = nil
 
-	setm2e := SendSerialString(fmt.Sprintf("+P4MIV%s-", h1), portm2.Port)
+	setm2e := SendSerialString(fmt.Sprintf("+P4MIV%s-", m2), portm2.Port)
 	if setm2e != nil {
 		log.Printf("error updating time: %s\n", setm2e)
 		return setm2e
