@@ -10,7 +10,14 @@ import (
 )
 
 // func SetPanelBCD()
-
+func GetPortByID(id string, mapping []PortMap) (PortMap, error) {
+	for _, m := range mapping {
+		if m.PanelID == id {
+			return m, nil
+		}
+	}
+	return PortMap{}, fmt.Errorf("the PanelID %s not found", id)
+}
 func ClockModeUpdateTime(pm *[]PortMap) error {
 	dt := time.Now()
 	timestamp := dt.Format("15:04")
@@ -20,26 +27,102 @@ func ClockModeUpdateTime(pm *[]PortMap) error {
 	m1 := timestamp[3:4]
 	m2 := timestamp[4:5]
 
-	dataArray := []string{h1, h2, m1, m2}
-
-	for i, m := range *pm {
-		value := dataArray[i]
-		sse := SendSerialString(fmt.Sprintf("+P%sMIV%s-", m.PanelID, value), m.Port)
-		if sse != nil {
-			log.Printf("error updating time: %s\n", sse)
-			return sse
-		}
-		fakeBCDData := BCDData{
-			PanelID: m.PanelID,
-			Value:   value,
-		}
-
-		m.State.Mode = "clock"
-		m.State.AlphaData = nil
-		m.State.BCDData = &fakeBCDData
-		m.State.DirectData = nil
-
+	// dataArray := []string{h1, h2, m1, m2}
+	// log.Println(dataArray)
+	porth1, err := GetPortByID("1", *pm)
+	if err != nil {
+		return err
 	}
+	porth2, err := GetPortByID("2", *pm)
+	if err != nil {
+		return err
+	}
+	portm1, err := GetPortByID("3", *pm)
+	if err != nil {
+		return err
+	}
+	portm2, err := GetPortByID("4", *pm)
+	if err != nil {
+		return err
+	}
+
+	seth1e := SendSerialString(fmt.Sprintf("+P1MIV%s-", h1), porth1.Port)
+	if seth1e != nil {
+		log.Printf("error updating time: %s\n", seth1e)
+		return seth1e
+	}
+	f1 := BCDData{
+		PanelID: "1",
+		Value:   h1,
+	}
+	porth1.State.Mode = "clock"
+	porth1.State.AlphaData = nil
+	porth1.State.BCDData = &f1
+	porth1.State.DirectData = nil
+
+	seth2e := SendSerialString(fmt.Sprintf("+P2MIV%s-", h1), porth2.Port)
+	if seth2e != nil {
+		log.Printf("error updating time: %s\n", seth2e)
+		return seth2e
+	}
+	f2 := BCDData{
+		PanelID: "2",
+		Value:   h2,
+	}
+	porth2.State.Mode = "clock"
+	porth2.State.AlphaData = nil
+	porth2.State.BCDData = &f2
+	porth2.State.DirectData = nil
+
+	setm1e := SendSerialString(fmt.Sprintf("+P3MIV%s-", h1), portm1.Port)
+	if setm1e != nil {
+		log.Printf("error updating time: %s\n", setm1e)
+		return setm1e
+	}
+
+	f3 := BCDData{
+		PanelID: "3",
+		Value:   m1,
+	}
+
+	portm1.State.Mode = "clock"
+	portm1.State.AlphaData = nil
+	portm1.State.BCDData = &f3
+	portm1.State.DirectData = nil
+
+	setm2e := SendSerialString(fmt.Sprintf("+P4MIV%s-", h1), portm2.Port)
+	if setm2e != nil {
+		log.Printf("error updating time: %s\n", setm2e)
+		return setm2e
+	}
+	f4 := BCDData{
+		PanelID: "4",
+		Value:   m2,
+	}
+	portm2.State.Mode = "clock"
+	portm2.State.AlphaData = nil
+	portm2.State.BCDData = &f4
+	portm2.State.DirectData = nil
+
+	// for i, m := range *pm {
+	// 	value := dataArray[i]
+	// 	// log.Printf("+P%sMIV%s-", m.PanelID, value)
+	// 	sse := SendSerialString(fmt.Sprintf("+P%sMIV%s-", m.PanelID, value), m.Port)
+	// 	if sse != nil {
+	// 		log.Printf("error updating time: %s\n", sse)
+	// 		return sse
+	// 	}
+	// 	fakeBCDData := BCDData{
+	// 		PanelID: m.PanelID,
+	// 		Value:   value,
+	// 	}
+
+	// 	m.State.Mode = "clock"
+	// 	m.State.AlphaData = nil
+	// 	m.State.BCDData = &fakeBCDData
+	// 	m.State.DirectData = nil
+
+	// }
 	return nil
 }
 
