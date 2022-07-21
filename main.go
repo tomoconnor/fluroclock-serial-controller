@@ -29,30 +29,30 @@ func ClockModeUpdateTime(pm *[]PortMap) error {
 
 	// dataArray := []string{h1, h2, m1, m2}
 	log.Println("Data:", h1, h2, m1, m2)
-	porth1, err := GetPortByID("1", *pm)
+	porth1, err := GetPortByID("4", *pm)
 	if err != nil {
 		return err
 	}
-	porth2, err := GetPortByID("2", *pm)
+	porth2, err := GetPortByID("3", *pm)
 	if err != nil {
 		return err
 	}
-	portm1, err := GetPortByID("3", *pm)
+	portm1, err := GetPortByID("2", *pm)
 	if err != nil {
 		return err
 	}
-	portm2, err := GetPortByID("4", *pm)
+	portm2, err := GetPortByID("1", *pm)
 	if err != nil {
 		return err
 	}
 
-	seth1e := SendSerialString(fmt.Sprintf("+P1MIV%s-", h1), porth1.Port)
+	seth1e := SendSerialString(fmt.Sprintf("+P4MIV%s-", h1), porth1.Port)
 	if seth1e != nil {
 		log.Printf("error updating time: %s\n", seth1e)
 		return seth1e
 	}
 	f1 := BCDData{
-		PanelID: "1",
+		PanelID: "4",
 		Value:   h1,
 	}
 	porth1.State.Mode = "clock"
@@ -60,13 +60,13 @@ func ClockModeUpdateTime(pm *[]PortMap) error {
 	porth1.State.BCDData = &f1
 	porth1.State.DirectData = nil
 
-	seth2e := SendSerialString(fmt.Sprintf("+P2MIV%s-", h2), porth2.Port)
+	seth2e := SendSerialString(fmt.Sprintf("+P3MIV%s-", h2), porth2.Port)
 	if seth2e != nil {
 		log.Printf("error updating time: %s\n", seth2e)
 		return seth2e
 	}
 	f2 := BCDData{
-		PanelID: "2",
+		PanelID: "3",
 		Value:   h2,
 	}
 	porth2.State.Mode = "clock"
@@ -74,14 +74,14 @@ func ClockModeUpdateTime(pm *[]PortMap) error {
 	porth2.State.BCDData = &f2
 	porth2.State.DirectData = nil
 
-	setm1e := SendSerialString(fmt.Sprintf("+P3MIV%s-", m1), portm1.Port)
+	setm1e := SendSerialString(fmt.Sprintf("+P2MIV%s-", m1), portm1.Port)
 	if setm1e != nil {
 		log.Printf("error updating time: %s\n", setm1e)
 		return setm1e
 	}
 
 	f3 := BCDData{
-		PanelID: "3",
+		PanelID: "2",
 		Value:   m1,
 	}
 
@@ -90,13 +90,13 @@ func ClockModeUpdateTime(pm *[]PortMap) error {
 	portm1.State.BCDData = &f3
 	portm1.State.DirectData = nil
 
-	setm2e := SendSerialString(fmt.Sprintf("+P4MIV%s-", m2), portm2.Port)
+	setm2e := SendSerialString(fmt.Sprintf("+P1MIV%s-", m2), portm2.Port)
 	if setm2e != nil {
 		log.Printf("error updating time: %s\n", setm2e)
 		return setm2e
 	}
 	f4 := BCDData{
-		PanelID: "4",
+		PanelID: "1",
 		Value:   m2,
 	}
 	portm2.State.Mode = "clock"
